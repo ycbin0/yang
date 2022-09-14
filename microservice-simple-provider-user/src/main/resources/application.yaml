@@ -1,0 +1,68 @@
+server:
+  port: 8000
+
+logging:
+  level:
+    com.bin: debug
+
+spring:
+  application:
+    name: bin-provider
+  redis:
+    # redis 默认有16个分片，使用第一个
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 1500
+    lettuce:
+      pool:
+        max-active: 8 # 最大连接数
+        min-idle: 0 # 最小连接数
+        max-wait: -1 #最大等待连接数
+    password: 987560
+  security:
+    user:
+      name: bin
+      password: 987560
+
+
+
+# actuator 可以结合 SpringSecurity 使用，保护其端口地址
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude:
+        include: "*" #选择端口开放（不包括 shutdown ）
+      base-path: /act  #选择父路径，否则默认 、actuator
+  endpoint:
+    health:
+      show-details: always  #是否展示详细信息
+    env:
+      enabled: true
+    beans:
+      enabled: true
+    shutdown:
+      enabled: false #启动是否
+    info:
+      cache:
+        time-to-live: 10
+    httptrace:
+      enabled: true
+  info:
+    java:
+      enabled: true
+#info: #啊不生效 原因不详
+#  app:
+#    encoding: UTF-8
+#    java.source: 1.8
+#    java.traget: 1.8
+
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+#      defaultZone: http://bin:987560@localhost:8000/eureka/

@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: consumer-movie
+
+eureka:
+  client:
+    security:
+      basic:
+        user: bin
+        password: 987560
+    service-url:
+#      defaultZone: http://${eureka.client.security.basic.user}:${eureka.client.security.basic.password}@localhost:8000/eureka/
+      defaultZone: http://localhost:8000/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+    metadata-map:
+      bin: yqy
+
+management:
+  server:
+    port: 8084
+  endpoints:
+    web:
+      exposure:
+        exclude:
+        include: "*" #选择端口开放（不包括 shutdown ）
+      base-path: /act  #选择父路径，否则默认 、actuator
+  endpoint:
+    health:
+      show-details: always  #是否展示详细信息
+    env:
+      enabled: true
+    beans:
+      enabled: true
+    shutdown:
+      enabled: false #启动是否
+    info:
+      cache:
+        time-to-live: 10
+    httptrace:
+      enabled: true
+  info:
+    java:
+      enabled: true
