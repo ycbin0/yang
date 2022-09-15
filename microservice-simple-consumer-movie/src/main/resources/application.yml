@@ -47,3 +47,7 @@ management:
   info:
     java:
       enabled: true
+
+feign:
+  circuitbreaker:
+    enabled: true

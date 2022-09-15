@@ -26,6 +26,9 @@ public class ConsumerMovieController {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
+    @Autowired
+    private FeignConsumerController feignConsumerController;
+
 //    @HystrixCommand(fallbackMethod = "findNoneBack")
     @HystrixCommand(fallbackMethod = "findNoneBack", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000"),
@@ -51,12 +54,17 @@ public class ConsumerMovieController {
         System.out.println(choose.getHost() + ":" + choose.getPort() + ":" + choose.getServiceId());
     }
 
-    @GetMapping("/firstProvider")
-    public String firstMethod(){
-        System.out.println("consumer 消费者");
-        return "ProviderUserController 控制类";
-    }
+//    @GetMapping("/firstProvider")
+//    public String firstMethod(){
+//        System.out.println("consumer 消费者");
+//        return "ProviderUserController 控制类";
+//    }
     public String findNoneBack(){
         return "服务器已经瘫痪";
+    }
+
+    @GetMapping("/feignConsumer")
+    public String feignConsumer(){
+        return this.feignConsumerController.feignConsumer();
     }
 }
