@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bin.login.mapper.AuthorityMapper">
+
+    <resultMap id="AuthorityResult" type="Authority">
+        <result column="auth_id" property="authId" />
+        <result column="auth_name" property="authName" />
+        <result column="auth_code" property="authCode" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_time" property="createTime" />
+        <result column="remark" property="remark" />
+        <result column="del_flag" property="delFlag" />
+        <result column="bak" property="bak" />
+    </resultMap>
+
+    <select id="selectOneAuthority" parameterType="Authority" resultMap="AuthorityResult">
+        select * from sys_authority
+        <where>
+        del_flag = 0
+            <if test="authId != null and authId != ''"> and auth_id = #{authId}</if>
+            <if test="authName != null and authName != ''"> and auth_name = #{authName}</if>
+            <if test="authCode != null and authCode != ''"> and auth_code = #{authCode}</if>
+            <if test="createBy != null "> and create_by = #{createBy}</if>
+            <if test="updateBy != null "> and update_by = #{updateBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+            <if test="bak != null and bak != ''"> and bak = #{bak}</if>
+        </where>
+    </select>
+
+    <select id="selectAllAuthority" parameterType="Authority" resultMap="AuthorityResult">
+        select * from sys_authority
+        <where>
+            del_flag = 0
+            <if test="authId != null and authId != ''"> and auth_id = #{authId}</if>
+            <if test="authName != null and authName != ''"> and auth_name = #{authName}</if>
+            <if test="authCode != null and authCode != ''"> and auth_code = #{authCode}</if>
+            <if test="createBy != null "> and create_by = #{createBy}</if>
+            <if test="updateBy != null "> and update_by = #{updateBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+            <if test="bak != null and bak != ''"> and bak = #{bak}</if>
+        </where>
+    </select>
+
+    <insert id="insertAuthority" parameterType="Authority" >
+        insert into sys_authority
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="authId != null and authId != ''">auth_id,</if>
+            <if test="authName != null and authName != ''">auth_name,</if>
+            <if test="authCode != null and authCode != ''">auth_code,</if>
+            <if test="createBy != null ">create_by,</if>
+            <if test="updateBy != null ">update_by,</if>
+            create_time,
+            update_time,
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="bak != null and bak != ''">bak,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="authId != null and authId != ''"> #{authId},</if>
+            <if test="authName != null and authName != ''"> #{authName},</if>
+            <if test="authCode != null and authCode != ''"> #{authCode},</if>
+            <if test="createBy != null "> #{createBy},</if>
+            <if test="updateBy != null "> #{updateBy},</if>
+            now(),
+            now(),
+            <if test="remark != null and remark != ''"> #{remark},</if>
+            <if test="bak != null and bak != ''"> #{bak},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAuthority" parameterType="Authority" >
+        update sys_authority
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="authName != null ">auth_name = #{authName},</if>
+            <if test="authCode != null ">auth_code = #{authCode},</if>
+            <if test="createBy != null ">create_by = #{createBy},</if>
+            <if test="updateBy != null ">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = now(),</if>
+            <if test="remark != null ">remark = #{remark},</if>
+            <if test="bak != null ">bak = #{bak},</if>
+        </trim>
+        where authority_id = #{authorityId}
+    </update>
+
+    <update id="deleteAuthority" parameterType="String">
+        update sys_authority set del_flag = 1 where authority_id = #{authorityId}
+    </update>
+
+    <select id="selectByRole" parameterType="String" resultMap="AuthorityResult">
+        select * from sys_authority where auth_id in (select auth_id from sys_role_authority where role_id=#{roleId})
+    </select>
+</mapper>

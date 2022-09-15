@@ -1,0 +1,13 @@
+spring:
+  redis:
+    # redis 默认有16个分片，使用第一个
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 1500
+    lettuce:
+      pool:
+        max-active: 8 # 最大连接数
+        min-idle: 0 # 最小连接数
+        max-wait: -1 #最大等待连接数
+    password: 987560

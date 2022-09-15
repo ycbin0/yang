@@ -1,0 +1,98 @@
+server:
+  port: 8085
+#  port: 8082
+
+spring:
+  profiles:
+    include: redis
+  application:
+    name: bin-Learn
+  datasource:
+    master:
+      jdbc-url: jdbc:postgresql://127.0.0.1:5432/learnway?characterEncoding=utf8&useUnicode=true&serverTimeZone=Asia/Shanghai&useSSL=false #自动装载可以使用url
+      username: postgres
+      password: 987560Ycb
+#      password: 987560
+      drive-class-name: org.postgresql.Driver
+#    db1:
+#      jdbc-url: jdbc:postgresql://127.0.0.1:5432/test?characterEncoding=utf8&useUnicode=true&serverTimeZone=Asia/Shanghai&useSSL=false #自动装载可以使用url
+#      username: postgres
+##      password: 987560Ycb
+#      password: 987560
+#      drive-class-name: org.postgresql.Driver
+    db1:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/learnway?characterEncoding=utf8&useUnicode=true&serverTimezone=Asia/Shanghai&useSSL=false
+      username: root
+      password: 987560ycb
+      drive-class-name: com.mysql.cj.jdbc.Driver
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  rabbitmq:
+    virtual-host: /bin
+    host: 127.0.0.1
+    port: 5672
+    username: bin
+    password: 987560
+
+
+logging:
+  level:
+    com.bin: debug
+
+
+jwt:
+  salt: binAndyqy
+  expipationTime: 60 * 60 * 3 * 1000
+
+pagehelper:
+  helper-dialect: postgresqlq
+  supportMethodsArguments: true  # 支持通过 Mapper 接口参数来传递分页参数
+  params: count=countsql
+  reasonable: true  # 当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+#      defaultZone: http://bin:987560@localhost:8000/eureka/
+  instance:
+    prefer-ip-address: true
+#    hostname: localhost
+
+
+  #    auto-refresh: true
+#    ext-config[0]:
+#      namespace: public
+#      group: DEFAULT_GROUP
+#      data-id: dev
+#      type: yaml
+#      auto-refresh: true
+
+#nacos:
+  #  discovery:
+  #    server-addr: 127.0.0.1:8848
+#  config:
+#    server-addr: 127.0.0.1:8848
+#    bootstrap:
+#      enable: true
+#nacos:
+#  config:
+#    bootstrap:
+#      enable: true
+#    data-id: dev
+#    type: yaml
+#    group: DEFAULT_GROUP
+#    namespace: public
+#    auto-refresh: true
+
+#nacos:
+#  config:
+#    data-id: bootstrap
+#    type: yaml
+#    bootstrap:
+#      enable: true
+#    group: DEFAULT_GROUP

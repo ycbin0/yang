@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bin.login.mapper.RoleAndAuthorityMapper">
+
+    <insert id="insertRoleAndAuthority" parameterType="List">
+        insert into sys_role_authority(role_id, auth_id) values
+            <foreach collection="auths" separator="," item="item">
+                (#{roleId}, #{item})
+            </foreach>
+    </insert>
+
+    <delete id="deleteRoleAndAuthority" parameterType="String">
+        delete from sys_role_authority where role_id = #{roleId}
+    </delete>
+
+</mapper>

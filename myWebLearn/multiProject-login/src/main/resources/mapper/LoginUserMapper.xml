@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bin.login.mapper.LoginUserMapper">
+
+    <resultMap id="LoginUserResult" type="LoginUser">
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="username" />
+        <result column="password" property="password" />
+        <result column="nick_name" property="nickName" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="del_flag" property="delFlag" />
+        <result column="bak" property="bak" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <select id="selectOneLoginUser" parameterType="LoginUser" resultMap="LoginUserResult">
+        select * from sys_user
+        <where>
+        del_flag = 0
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="username != null and username != ''"> and user_name = #{username}</if>
+            <if test="password != null and password != ''"> and password = #{password}</if>
+            <if test="nickName != null and nickName != ''"> and nick_name = #{nickName}</if>
+            <if test="lastLoginTime != null "> and last_login_time = #{lastLoginTime}</if>
+            <if test="createBy != null "> and create_by = #{createBy}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateBy != null "> and update_by = #{updateBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="bak != null and bak != ''"> and bak = #{bak}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+        </where>
+    </select>
+
+    <select id="selectAllLoginUser" parameterType="LoginUser" resultMap="LoginUserResult">
+        select * from sys_user
+        <where>
+            del_flag = 0
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="username != null and username != ''"> and user_name = #{username}</if>
+            <if test="password != null and password != ''"> and password = #{password}</if>
+            <if test="nickName != null and nickName != ''"> and nick_name = #{nickName}</if>
+            <if test="lastLoginTime != null "> and last_login_time = #{lastLoginTime}</if>
+            <if test="createBy != null "> and create_by = #{createBy}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateBy != null "> and update_by = #{updateBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="bak != null and bak != ''"> and bak = #{bak}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+        </where>
+    </select>
+
+    <insert id="insertLoginUser" parameterType="LoginUser" >
+        <selectKey resultType="Integer" order="AFTER" keyProperty="userId">
+            select currval('seq_sys_login'::regclass) as userId
+        </selectKey>
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">user_name,</if>
+            <if test="password != null and password != ''">password,</if>
+            <if test="nickName != null and nickName != ''">nick_name,</if>
+            <if test="lastLoginTime != null ">last_login_time,</if>
+            <if test="createBy != null ">create_by,</if>
+            create_time,
+            <if test="updateBy != null ">update_by,</if>
+            update_time,
+            <if test="bak != null and bak != ''">bak,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''"> #{username},</if>
+            <if test="password != null and password != ''"> #{password},</if>
+            <if test="nickName != null and nickName != ''"> #{nickName},</if>
+            <if test="lastLoginTime != null "> #{lastLoginTime},</if>
+            <if test="createBy != null "> #{createBy},</if>
+            now(),
+            <if test="updateBy != null "> #{updateBy},</if>
+            now(),
+            <if test="bak != null and bak != ''"> #{bak},</if>
+            <if test="remark != null and remark != ''"> #{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateLoginUser" parameterType="LoginUser" >
+        update sys_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null ">user_name = #{username},</if>
+            <if test="password != null ">password = #{password},</if>
+            <if test="nickName != null ">nick_name = #{nickName},</if>
+            <if test="lastLoginTime != null ">last_login_time = #{lastLoginTime},</if>
+            <if test="updateBy != null ">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = now(),</if>
+            <if test="bak != null ">bak = #{bak},</if>
+            <if test="remark != null ">remark = #{remark},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+    <update id="deleteLoginUser" parameterType="Integer">
+        update sys_user set del_flag = 1 where user_id = #{userId}
+    </update>
+
+</mapper>
