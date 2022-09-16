@@ -1,0 +1,27 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: hytrix-turbine
+
+
+#feign:
+#  circuitbreaker:
+#    enabled: true
+
+
+#hystrix:
+#  dashboard:
+#    proxy-stream-allow-list: "*"  #配置这不会出现连接不上问题
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+  instance:
+    prefer-ip-address: true
+
+
+turbine:
+  app-config: consumer-movie
+  cluster-name-expression: "default"

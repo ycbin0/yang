@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @Date: 2022/5/15 18:30
  */
 @Component
-@RabbitListener(queuesToDeclare = @Queue("testQueue"))
+//@RabbitListener(queuesToDeclare = @Queue("testQueue"))
 public class Receiver {
 
     @RabbitHandler

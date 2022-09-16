@@ -13,9 +13,10 @@
 
     <!-- 声明子模块 -->
     <modules>
-<!--        <module>myWebLearn</module>-->
+        <module>myWebLearn</module>
         <module>microservice-simple-consumer-movie</module>
         <module>microservice-simple-provider-user</module>
+        <module>microservice-feign-hystrix-fallback-stream</module>
     </modules>
 
 </project>

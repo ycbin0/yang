@@ -51,3 +51,8 @@ management:
 feign:
   circuitbreaker:
     enabled: true
+
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "*"  #配置这不会出现连接不上问题
